@@ -32,10 +32,10 @@ def get_table_rows():
 def generate_html(rows):
     today = datetime.now().strftime("%d %B %Y")
     html = f"""<!DOCTYPE html>
-<html lang=\"en\">
+<html lang="en">
 <head>
-  <meta charset=\"UTF-8\" />
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UK Political Party Membership Numbers</title>
   <style>
     body {{ font-family: Arial, sans-serif; padding: 20px; background: #fff; color: #222; }}
