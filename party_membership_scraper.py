@@ -9,22 +9,24 @@ def get_table_rows():
     response = requests.get(WIKI_URL)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Find the first table after the heading "Membership of UK political parties"
+    # Find the table after the heading "Membership of UK political parties"
     headings = soup.find_all(["h2", "h3"])
     for heading in headings:
         if "Membership of UK political parties" in heading.get_text():
             next_table = heading.find_next("table", class_="wikitable")
             if next_table:
+                print("✅ Found membership table.")
                 return next_table.find_all("tr")[1:]  # skip header row
+    print("❌ Could not find the membership table.")
     return []
 
 def generate_html(rows):
     today = datetime.now().strftime("%d %B %Y")
     html = f"""<!DOCTYPE html>
-<html lang=\"en\">
+<html lang="en">
 <head>
-  <meta charset=\"UTF-8\" />
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UK Political Party Membership Numbers</title>
   <style>
     body {{ font-family: Arial, sans-serif; padding: 20px; background: #fff; color: #222; }}
@@ -55,15 +57,6 @@ def generate_html(rows):
                 members = cells[1].get_text(strip=True)
                 html += f"<tr><td>{party}</td><td>{members}</td><td><a href='{WIKI_URL}'>Wikipedia</a></td></tr>\n"
 
-    html += """</tbody></table></body></html>"""
+    html += "</tbody></table></body></html>"
 
-    with open(HTML_FILE, "w", encoding="utf-8") as f:
-        f.write(html)
-
-def main():
-    rows = get_table_rows()
-    generate_html(rows)
-    print("✅ index.html updated.")
-
-if __name__ == "__main__":
-    main()
+    with open(HTML_FI_
