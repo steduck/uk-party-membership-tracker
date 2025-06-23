@@ -59,4 +59,13 @@ def generate_html(rows):
 
     html += "</tbody></table></body></html>"
 
-    with open(HTML_FI_
+    with open(HTML_FILE, "w", encoding="utf-8") as f:
+        f.write(html)
+
+def main():
+    rows = get_table_rows()
+    generate_html(rows)
+    print(f"✅ index.html updated with {len(rows)} rows.")
+
+if __name__ == "__main__":
+    main()
