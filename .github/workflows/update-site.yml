@@ -1,3 +1,10 @@
+name: Auto Update Site
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:  # 👈 This is the missing line!
+
 jobs:
   build:
     runs-on: ubuntu-latest
