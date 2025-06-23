@@ -9,12 +9,13 @@ def get_table_rows():
     response = requests.get(WIKI_URL)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Find the first table that looks like the one we want
-    tables = soup.find_all("table", class_="wikitable")
-    for table in tables:
-        header_cells = [cell.get_text(strip=True) for cell in table.find_all("th")]
-        if "Party" in header_cells and "Members" in header_cells:
-            return table.find_all("tr")[1:]  # skip header row
+    # Find the first table after a heading that says "Membership of UK political parties"
+    headings = soup.find_all(["h2", "h3"])
+    for heading in headings:
+        if "Membership of UK political parties" in heading.get_text():
+            next_table = heading.find_next("table", class_="wikitable")
+            if next_table:
+                return next_table.find_all("tr")[1:]  # skip header row
     return []
 
 def generate_html(rows):
