@@ -9,7 +9,7 @@ def get_table_rows():
     response = requests.get(WIKI_URL)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Find the first table after a heading that says "Membership of UK political parties"
+    # Find the first table after the heading "Membership of UK political parties"
     headings = soup.find_all(["h2", "h3"])
     for heading in headings:
         if "Membership of UK political parties" in heading.get_text():
@@ -21,10 +21,10 @@ def get_table_rows():
 def generate_html(rows):
     today = datetime.now().strftime("%d %B %Y")
     html = f"""<!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
   <title>UK Political Party Membership Numbers</title>
   <style>
     body {{ font-family: Arial, sans-serif; padding: 20px; background: #fff; color: #222; }}
