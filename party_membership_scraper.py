@@ -9,24 +9,33 @@ def get_table_rows():
     response = requests.get(WIKI_URL)
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # Find the table after the heading "Membership of UK political parties"
+    print("✅ Downloaded Wikipedia page.")
+    
     headings = soup.find_all(["h2", "h3"])
+    print(f"✅ Found {len(headings)} headings.")
+
     for heading in headings:
-        if "Membership of UK political parties" in heading.get_text():
+        heading_text = heading.get_text()
+        print(f"🔎 Checking heading: {heading_text}")
+        if "Membership of UK political parties" in heading_text:
             next_table = heading.find_next("table", class_="wikitable")
             if next_table:
-                print("✅ Found membership table.")
-                return next_table.find_all("tr")[1:]  # skip header row
-    print("❌ Could not find the membership table.")
+                print("✅ Found the correct table!")
+                rows = next_table.find_all("tr")[1:]  # skip header row
+                print(f"✅ Found {len(rows)} rows.")
+                return rows
+            else:
+                print("❌ Heading found but no table found after it.")
+    print("❌ Could not find the correct heading or table.")
     return []
 
 def generate_html(rows):
     today = datetime.now().strftime("%d %B %Y")
     html = f"""<!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
   <title>UK Political Party Membership Numbers</title>
   <style>
     body {{ font-family: Arial, sans-serif; padding: 20px; background: #fff; color: #222; }}
