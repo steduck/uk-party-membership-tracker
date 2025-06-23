@@ -48,7 +48,7 @@ def generate_html(rows):
         html += "<tr><td colspan='3'>No data found.</td></tr>\n"
     else:
         for row in rows:
-            cells = row.find_all("td")
+            cells = row.find_all(["td", "th"])
             if len(cells) >= 2:
                 party = cells[0].get_text(strip=True)
                 members = cells[1].get_text(strip=True)
