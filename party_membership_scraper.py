@@ -52,7 +52,7 @@ def generate_html(rows):
   <p>Last updated: {today}</p>
   <table>
     <thead>
-      <tr><th>Party</th><th>Members</th><th>Source</th></tr>
+      <tr><th>Party</th><th>Members</th><th>Movement</th></tr>
     </thead>
     <tbody>
 """
@@ -77,7 +77,11 @@ def generate_html(rows):
                 members_text = re.sub(r"\[update\]", "", members_text, flags=re.IGNORECASE)
                 members_text = members_text.strip()
 
-                html += f"<tr><td>{party}</td><td>{members_text}</td><td><a href='{WIKI_URL}'>Wikipedia</a></td></tr>\n"
+                # Example placeholder movement logic - always shows +0 for now
+                movement_value = 0
+                movement_sign = "+" if movement_value >= 0 else "-"
+                movement_class = "style='color: green;'" if movement_value >= 0 else "style='color: red;'"
+                html += f"<tr><td>{party}</td><td>{members_text}</td><td {movement_class}>{movement_sign}{abs(movement_value)}</td></tr>\n"
 
     html += "</tbody></table></body></html>"
 
