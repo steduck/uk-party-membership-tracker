@@ -88,6 +88,7 @@ def generate_html(rows):
         try:
             members = int(members_text)
         except ValueError:
+            print(f"⚠️ Could not convert member count for {party}: {members_text}")
             continue
 
         # Compare with stored data
