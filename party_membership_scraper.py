@@ -85,6 +85,9 @@ def generate_html(rows):
             sup.decompose()
         members_text = cells[1].get_text(strip=True).replace(",", "")
 
+        print(f"🔍 Raw party: {party}")
+        print(f"🔍 Raw members text: '{members_text}'")
+
         try:
             members = int(members_text)
         except ValueError:
