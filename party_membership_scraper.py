@@ -26,7 +26,7 @@ def get_table_rows():
     for heading in headings:
         heading_text = heading.get_text()
         print(f"🔎 Checking heading: {heading_text}")
-        if "Membership of UK political parties" in heading_text:
+        if "Current membership" in heading_text:
             next_table = heading.find_next("table", class_="wikitable")
             if next_table:
                 print("✅ Found membership table.")
