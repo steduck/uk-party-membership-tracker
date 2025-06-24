@@ -83,7 +83,14 @@ def generate_html(rows):
                 movement_class = "style='color: green;'" if movement_value >= 0 else "style='color: red;'"
                 html += f"<tr><td>{party}</td><td>{members_text}</td><td {movement_class}>{movement_sign}{abs(movement_value)}</td></tr>\n"
 
-    html += "</tbody></table></body></html>"
+    html += """
+        </tbody>
+      </table>
+      <p style='text-align: center; padding-top: 20px;'>
+        Source: <a href='https://en.wikipedia.org/wiki/Political_party_membership_in_the_United_Kingdom' target='_blank'>Wikipedia</a>
+      </p>
+    </body>
+    </html>
 
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(html)
