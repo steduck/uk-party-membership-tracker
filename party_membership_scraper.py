@@ -59,13 +59,26 @@ def generate_html(rows):
     if not rows:
         html += "<tr><td colspan='3'>No data found.</td></tr>\n"
     else:
-        for row in rows:
-            cells = row.find_all(["td", "th"])
-            if len(cells) >= 2:
-                party = cells[0].get_text(strip=True)
-                members = cells[1].get_text(strip=True)
-                html += f"<tr><td>{party}</td><td>{members}</td><td><a href='{WIKI_URL}'>Wikipedia</a></td></tr>\n"
+        import re
 
+for row in rows:
+    cells = row.find_all(["td", "th"])
+    if len(cells) >= 2:
+        # Remove <sup> tags from both party and members columns
+        for sup in cells[0].find_all("sup"):
+            sup.decompose()
+        for sup in cells[1].find_all("sup"):
+            sup.decompose()
+
+        party = cells[0].get_text(strip=True)
+
+        members_text = cells[1].get_text(strip=True)
+        # Remove any [1], [update], or similar square-bracket citations
+        members_text = re.sub(r"\[\d+\]", "", members_text)
+        members_text = re.sub(r"\[update\]", "", members_text, flags=re.IGNORECASE)
+        members_text = members_text.strip()
+
+        html += f"<tr><td>{party}</td><td>{members_text}</td><td><a href='{WIKI_URL}'>Wikipedia</a></td></tr>\n"
     html += "</tbody></table></body></html>"
 
     with open(HTML_FILE, "w", encoding="utf-8") as f:
